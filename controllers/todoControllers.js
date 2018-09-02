@@ -14,7 +14,7 @@ var todoSchema = new mongoose.Schema({
 var Todo = mongoose.model('Todo', todoSchema);
 
 module.exports = function (app) {
-    app.get('/todo', function (req, res) {
+    app.get('/', function (req, res) {
         Todo.find({}, function (err, data) {
             if (err) throw err;
             res.render('todo', {
@@ -24,14 +24,14 @@ module.exports = function (app) {
     });
 
 
-    app.post('/todo', urlencodedParser, function (req, res) {
+    app.post('/', urlencodedParser, function (req, res) {
         var itemOne = Todo(req.body).save(function (err, data) {
             if (err) throw err;
             res.json(data);
         });
     });
 
-    app.delete('/todo/:item', function (req, res) {
+    app.delete('/:item', function (req, res) {
         Todo.find({
             item: req.params.item.replace(/-/g, " ")
         }).remove(function (err, data) {
